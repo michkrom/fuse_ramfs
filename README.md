@@ -5,10 +5,6 @@
 
 * Build cmake/make
 
-* TODO:
-    * chmod/chown
-    * fix log-level mkdir FUSE error (no clue why)
-
 ```
 mkdir build && cd build
 cmake ..
@@ -18,3 +14,8 @@ make
 * Output:
     * ramfs - high level API implementation
     * ramfs_ll - low level level API implementation
+
+* TODO:
+    * chmod/chown
+    * obey permissions
+    * fix log-level mkdir FUSE error (no clue why)
