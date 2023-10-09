@@ -9,6 +9,7 @@
 #include <stdio.h>
 
 #include "ramfs.h"
+#include <string.h>
 
 #define TRACE(path) std::cout << __FUNCTION__ << " " << path << std::endl;
 
@@ -85,12 +86,44 @@ static int ramfs_open(const char *path, struct fuse_file_info *fi) {
   return 0;
 }
 
+static int ramfs_create(const char *path, mode_t mode,
+                        struct fuse_file_info *fi) {
+  TRACE(path)
+  (void)fi;
+  std::filesystem::path fspath(path);
+  if (auto in = findDirByPath(fspath.parent_path())) {
+    if (in->addFile(fspath.filename().c_str(), mode))
+      return 0;
+    else
+      return -EEXIST;
+  } else
+    return -ENOENT;
+  return 0;
+}
+
 static int ramfs_read(const char *path, char *buf, size_t size, off_t offset,
                       struct fuse_file_info *fi) {
   TRACE(path)
-  size_t len;
   (void)fi;
-  size = 0;
+  if (auto in = dynamic_pointer_cast<INodeFile>(findByPath(path))) {
+    auto len = in->content.size();
+    if (offset < len) {
+      if (offset + size > len)
+        size = len - offset;
+      memcpy(buf, &in->content[offset], size);
+    }
+  }
+  return size;
+}
+
+static int ramfs_write(const char *path, const char *buf, size_t size,
+                       off_t offset, struct fuse_file_info *fi) {
+  TRACE(path)
+  (void)fi;
+  if (auto in = dynamic_pointer_cast<INodeFile>(findByPath(path))) {
+    in->content.resize(std::max(in->content.size(), size + offset));
+    memcpy(&in->content[offset], buf, size);
+  }
   return size;
 }
 
@@ -125,8 +158,10 @@ int mount(struct fuse_args args, const char *mountpoint) {
   ramfs_oper.init = ramfs_init;
   ramfs_oper.readdir = ramfs_readdir;
   ramfs_oper.open = ramfs_open;
+  ramfs_oper.create = ramfs_create;
   ramfs_oper.getattr = ramfs_getattr;
   ramfs_oper.read = ramfs_read;
+  ramfs_oper.write = ramfs_write;
   ramfs_oper.mkdir = ramfs_mkdir;
   ramfs_oper.rmdir = ramfs_unlink;
   ramfs_oper.unlink = ramfs_unlink;
