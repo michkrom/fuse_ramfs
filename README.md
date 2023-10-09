@@ -1,13 +1,20 @@
 # FUSE lib ram file system
 
-* Dependencies: libfuse-dev
+* Dependencies: libfuse3-dev (there is cmake/FindFUSE3.cmake)
+    * cmake/FindFUSE3.cmake finds it in local file system
 
 * Build cmake/make
 
-* TODO: chmod/chown; fix mkdir FUSE error (no clue why)
+* TODO:
+    * chmod/chown
+    * fix log-level mkdir FUSE error (no clue why)
 
 ```
 mkdir build && cd build
 cmake ..
 make
 ```
+
+* Output:
+    * ramfs - high level API implementation
+    * ramfs_ll - low level level API implementation

@@ -1,4 +1,3 @@
-*.obj
-*.a
 cmake-*/
-build/
+build*/
+.idea*/
