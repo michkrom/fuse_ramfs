@@ -29,19 +29,27 @@ add_executable(${PROJECT_NAME}_ll
 )
 
 if (FUSE_FOUND)
-    message(WARNING "USING FUSE, YAY!")
+    message("USING FUSE, YAY!")
+
+    if(FUSE_VERSION MATCHES "([0-9]*)\\.([0-9]).*")
+        message("asd")        
+        set(FUSE_USE_VERSION ${CMAKE_MATCH_1}${CMAKE_MATCH_2})
+    endif()
 
     target_compile_definitions(${PROJECT_NAME}
             PRIVATE HAS_FUSE=1
             PRIVATE _FILE_OFFSET_BITS=64
+            PRIVATE FUSE_USE_VERSION=${FUSE_USE_VERSION}
     )
     target_compile_definitions(${PROJECT_NAME}_ll
             PRIVATE HAS_FUSE=1
             PRIVATE _FILE_OFFSET_BITS=64
+            PRIVATE FUSE_USE_VERSION=${FUSE_USE_VERSION}
     )
     message("${FUSE_VERSION}")
     message("${FUSE_INCLUDE_DIRS}")
     message("${FUSE_LIBRARIES}")
+    message("FUSE_USE_VERSION=${FUSE_USE_VERSION}")
 
 else ()
     message(WARNING "SADLY NO FUSE!!!!!!!!!!!")

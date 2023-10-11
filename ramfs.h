@@ -1,12 +1,9 @@
 #pragma once
 
-#ifndef FUSE_USE_VERSION
-#define FUSE_USE_VERSION 34
-#endif
-
 #include <cassert>
 #include <cerrno>
 #include <fcntl.h>
+#include <fuse.h>
 #include <fuse_lowlevel.h>
 #include <unistd.h>
 

@@ -1,5 +1,3 @@
-#define FUSE_USE_VERSION 34
-
 #include <cerrno>
 #include <cstdlib>
 #include <cstring>

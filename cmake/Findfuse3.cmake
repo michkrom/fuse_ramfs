@@ -8,7 +8,7 @@
 #
 # and the following imported target
 # FUSE::FUSE
-
+message("====== FuseFind3 ======")
 find_package(PkgConfig)
 pkg_check_modules(PC_fuse QUIET fuse3)
 set(FUSE_VERSION ${PC_fuse_VERSION})
@@ -68,3 +68,4 @@ set(FUSE_INCLUDE_DIRS ${FUSE_INCLUDE_DIR})
 set(FUSE_LIBRARIES ${FUSE_LIBRARY})
 unset(FUSE_INCLDUE_DIR)
 unset(FUSE_LIBRARY)
+message("====== FuseFind3 ======")

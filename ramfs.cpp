@@ -1,5 +1,3 @@
-#define FUSE_USE_VERSION 34
-
 #include <assert.h>
 #include <errno.h>
 #include <fcntl.h>

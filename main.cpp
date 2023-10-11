@@ -1,5 +1,3 @@
-#define FUSE_USE_VERSION 31
-
 #include <errno.h>
 #include <fcntl.h>
 #include <filesystem>
