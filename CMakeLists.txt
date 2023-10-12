@@ -32,7 +32,6 @@ if (FUSE_FOUND)
     message("USING FUSE, YAY!")
 
     if(FUSE_VERSION MATCHES "([0-9]*)\\.([0-9]).*")
-        message("asd")        
         set(FUSE_USE_VERSION ${CMAKE_MATCH_1}${CMAKE_MATCH_2})
     endif()
 
