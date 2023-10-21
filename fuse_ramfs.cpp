@@ -153,6 +153,8 @@ struct fuse *fuse{};
 struct fuse_session *se{};
 
 int mount(struct fuse_args args, const char *mountpoint) {
+  assert(!fuse);
+  assert(!se);
   int res = -1;
   static struct fuse_operations ramfs_oper {};
   ramfs_oper.init = ramfs_init;

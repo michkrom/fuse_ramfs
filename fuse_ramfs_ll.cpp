@@ -193,6 +193,7 @@ struct fuse_session *se = nullptr;
 
 int mount(struct fuse_args args, const char *mountpoint) {
   int ret = -1;
+  assert(!se);
   static struct fuse_lowlevel_ops ramfs_oper {};
   ramfs_oper.lookup = ramfs_lookup;
   ramfs_oper.getattr = ramfs_getattr;
