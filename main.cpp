@@ -36,9 +36,9 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  printf("fuse hello: mounting...\n");
+  printf("fuse ramfs: mounting...\n");
   ret = mount(args, opts.mountpoint);
-  printf("fuse hello: done...\n");
+  printf("fuse famfs: done...\n");
   
   free(opts.mountpoint);
   // crashes on this: fuse_opt_free_args(&args);

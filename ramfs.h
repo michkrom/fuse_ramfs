@@ -137,21 +137,5 @@ struct INodeDir : public INode {
   }
 };
 
-static void ramfs_stat(inptr in, struct stat *stbuf) {
-  *stbuf = {};
-  stbuf->st_ino = in->m_inode;
-  stbuf->st_mode = in->m_mode;
-  stbuf->st_nlink = 1;
-  if (auto inf = dynamic_pointer_cast<INodeFile>(in))
-    stbuf->st_size = inf->content.size();
-  else
-    stbuf->st_size = 0;
-}
-
-static int ramfs_stat(fuse_ino_t ino, struct stat *stbuf) {
-  if (auto in = INode::find(ino)) {
-    ramfs_stat(in, stbuf);
-    return 0;
-  }
-  return -1;
-}
+void ramfs_stat(inptr in, struct stat *stbuf);
+int ramfs_stat(fuse_ino_t ino, struct stat *stbuf);
